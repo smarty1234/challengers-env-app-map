@@ -1,6 +1,6 @@
 # Challengers App Env Mapping
 
-- Before Deploying this app, please create a free account in MongoDB Atlas and get the credential string right. The idea behind this solution is to allow applications of one environment such as `DEV` to be connected to applications deployed in a higher environment like `UAT` or `STAGING` or `PROD` which may have a different release version or database version. The `Central' app means the Subject App or Searched App for which we are interested to know the connectivity diagram. This solution generates the json that can be rendered in a Java Script Framework like Angular or VuejS with support from additional Graphical Libraries like d3.js or its likes.
+- Before Deploying this app, please create a free account in MongoDB Atlas and get the credential string `challengers-env-app-map/master/src/main/resources/application.properties` right. The idea behind this solution is to allow applications of one environment such as `DEV` to be connected to applications deployed in a higher environment like `UAT` or `STAGING` or `PROD` which may have a different release version or database version. The `Central' app means the Subject App or Searched App for which we are interested to know the connectivity diagram. This solution generates the json that can be rendered in a Java Script Framework like Angular or VuejS with support from additional Graphical Libraries like d3.js or its likes.
 
 ## Run Spring Boot application
 ```
@@ -42,8 +42,8 @@ Once the application is up test this by the following GET,PUT,POST,DEL Methods
 	"description": "Employee Salary Data",
   "ucdteamName": "DOE3_EMP_SALARY_APP_DEVTEAM",
 	"centralapp": "false",
-  "upstreamapp": "false",
-  "downstreamapp" : "true"
+  "upstreamapp": "true",
+  "downstreamapp" : "false"
  },
 	{
 	"name": "EmpPerformanceApp",
@@ -51,8 +51,8 @@ Once the application is up test this by the following GET,PUT,POST,DEL Methods
 	"description": "Employee Performance Data",
   "ucdteamName": "DOE3_EMP_PERFORMANCE_APP_DEVTEAM",
 	"centralapp": "false",
-  "upstreamapp": "false",
-  "downstreamapp" : "true"
+  "upstreamapp": "true",
+  "downstreamapp" : "false"
  }
 	],
 	"deployDateTime" : "2022-10-28T14:45:15"
@@ -60,55 +60,53 @@ Once the application is up test this by the following GET,PUT,POST,DEL Methods
 ```
 - Response
 ```
-[
-	{
-		"id": "6354292da186d472ddab4947",
-		"components": [
-			{
-				"id": null,
-				"name": "EmployeeApp",
-				"description": "Employee List",
-				"centralapp": true,
-				"downstreamapp": false,
-				"upstreamapp": false,
-				"envName": "DEV",
-				"ucdteamName": "DOE3_EMP_ONBOARDING_APP_DEV_TEAM"
-			},
-			{
-				"id": null,
-				"name": "EmpAddressApp",
-				"description": "Employee Address List",
-				"centralapp": false,
-				"downstreamapp": false,
-				"upstreamapp": true,
-				"envName": "UAT",
-				"ucdteamName": "DOE3_EMP_ADDRESS_APP_DEVTEAM"
-			},
-			{
-				"id": null,
-				"name": "EmpSalaryApp",
-				"description": "Employee Salary Data",
-				"centralapp": false,
-				"downstreamapp": true,
-				"upstreamapp": false,
-				"envName": "UAT",
-				"ucdteamName": "DOE3_EMP_SALARY_APP_DEVTEAM"
-			},
-			{
-				"id": null,
-				"name": "EmpPerformanceApp",
-				"description": "Employee Performance Data",
-				"centralapp": false,
-				"downstreamapp": true,
-				"upstreamapp": false,
-				"envName": "PROD",
-				"ucdteamName": "DOE3_EMP_PERFORMANCE_APP_DEVTEAM"
-			}
-		],
-		"envName": "DEV",
-		"deployDateTime": "2022-10-28T14:45:15.000+00:00"
-	}
-]
+{
+	"id": "63543b7306c2d237520b0c85",
+	"components": [
+		{
+			"id": null,
+			"name": "EmployeeApp",
+			"description": "Employee List",
+			"centralapp": true,
+			"downstreamapp": false,
+			"upstreamapp": false,
+			"envName": "DEV",
+			"ucdteamName": "DOE3_EMP_ONBOARDING_APP_DEV_TEAM"
+		},
+		{
+			"id": null,
+			"name": "EmpAddressApp",
+			"description": "Employee Address List",
+			"centralapp": false,
+			"downstreamapp": false,
+			"upstreamapp": true,
+			"envName": "UAT",
+			"ucdteamName": "DOE3_EMP_ADDRESS_APP_DEVTEAM"
+		},
+		{
+			"id": null,
+			"name": "EmpSalaryApp",
+			"description": "Employee Salary Data",
+			"centralapp": false,
+			"downstreamapp": false,
+			"upstreamapp": true,
+			"envName": "UAT",
+			"ucdteamName": "DOE3_EMP_SALARY_APP_DEVTEAM"
+		},
+		{
+			"id": null,
+			"name": "EmpPerformanceApp",
+			"description": "Employee Performance Data",
+			"centralapp": false,
+			"downstreamapp": false,
+			"upstreamapp": true,
+			"envName": "PROD",
+			"ucdteamName": "DOE3_EMP_PERFORMANCE_APP_DEVTEAM"
+		}
+	],
+	"envName": "DEV",
+	"deployDateTime": "2022-10-28T14:45:15.000+00:00"
+}
 ```
 - GET api url: `http://localhost:8080/api/deployments`
 
