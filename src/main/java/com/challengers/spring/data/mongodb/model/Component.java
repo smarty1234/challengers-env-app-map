@@ -49,7 +49,7 @@ public class Component {
   }
 
   public void setEnvName(String envname) {
-    this.name = envname;
+    this.envname = envname;
   }
 
 
