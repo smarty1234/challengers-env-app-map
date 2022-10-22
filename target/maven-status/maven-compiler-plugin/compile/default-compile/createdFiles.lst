@@ -1,4 +1,3 @@
 com/challengers/spring/data/mongodb/AppComponentEnvApplication.class
 com/challengers/spring/data/mongodb/repository/ComponentRepository.class
 com/challengers/spring/data/mongodb/model/Component.class
-com/challengers/spring/data/mongodb/controller/ComponentController.class

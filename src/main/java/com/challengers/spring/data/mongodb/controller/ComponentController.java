@@ -29,27 +29,27 @@ public class ComponentController {
   @Autowired
   ComponentRepository ComponentRepository ;
 
-  @GetMapping("/Components")
-  public ResponseEntity<List<Component>> getAllComponents(@RequestParam(required = false) String name) {
+  @GetMapping("/components")
+  public ResponseEntity<List<Component>> getAllcomponents(@RequestParam(required = false) String name) {
     try {
-      List<Component> Components = new ArrayList<Component>();
+      List<Component> components = new ArrayList<Component>();
 
       if (name == null)
-        ComponentRepository .findAll().forEach(Components::add);
+        ComponentRepository .findAll().forEach(components::add);
       else
-        ComponentRepository .findBynameContaining(name).forEach(Components::add);
+        ComponentRepository .findByNameContaining(name).forEach(components::add);
 
-      if (Components.isEmpty()) {
+      if (components.isEmpty()) {
         return new ResponseEntity<>(HttpStatus.NO_CONTENT);
       }
 
-      return new ResponseEntity<>(Components, HttpStatus.OK);
+      return new ResponseEntity<>(components, HttpStatus.OK);
     } catch (Exception e) {
       return new ResponseEntity<>(null, HttpStatus.INTERNAL_SERVER_ERROR);
     }
   }
 
-  @GetMapping("/Components/{id}")
+  @GetMapping("/components/{id}")
   public ResponseEntity<Component> getComponentById(@PathVariable("id") String id) {
     Optional<Component> ComponentData = ComponentRepository .findById(id);
 
@@ -60,17 +60,17 @@ public class ComponentController {
     }
   }
 
-  @PostMapping("/Components")
-  public ResponseEntity<Component> createComponent(@RequestBody Component Component) {
+  @PostMapping("/components")
+  public ResponseEntity<Component> createComponent(@RequestBody Component component) {
     try {
-      Component _Component = ComponentRepository .save(new Component(Component.getName(), Component.getDescription(), false));
+      Component _Component = ComponentRepository .save(new Component(component.getName(), component.getEnvName(), component.getDescription(), component.getUCDTeamName(), component.isCentralapp(), component.isDownstreamapp(), component.isUpstreamapp()));
       return new ResponseEntity<>(_Component, HttpStatus.CREATED);
     } catch (Exception e) {
       return new ResponseEntity<>(null, HttpStatus.INTERNAL_SERVER_ERROR);
     }
   }
 
-  @PutMapping("/Components/{id}")
+  @PutMapping("/components/{id}")
   public ResponseEntity<Component> updateComponent(@PathVariable("id") String id, @RequestBody Component Component) {
     Optional<Component> ComponentData = ComponentRepository .findById(id);
 
@@ -78,14 +78,17 @@ public class ComponentController {
       Component _Component = ComponentData.get();
       _Component.setName(Component.getName());
       _Component.setDescription(Component.getDescription());
-      _Component.setisCentralApp(Component.isisCentralApp());
+      _Component.setUCDTeamName(Component.getUCDTeamName());
+      _Component.setCentralapp(Component.isCentralapp());
+      _Component.setUpstreamapp(Component.isUpstreamapp());
+      _Component.setDownstreamapp(Component.isDownstreamapp());
       return new ResponseEntity<>(ComponentRepository .save(_Component), HttpStatus.OK);
     } else {
       return new ResponseEntity<>(HttpStatus.NOT_FOUND);
     }
   }
 
-  @DeleteMapping("/Components/{id}")
+  @DeleteMapping("/components/{id}")
   public ResponseEntity<HttpStatus> deleteComponent(@PathVariable("id") String id) {
     try {
       ComponentRepository .deleteById(id);
@@ -95,8 +98,8 @@ public class ComponentController {
     }
   }
 
-  @DeleteMapping("/Components")
-  public ResponseEntity<HttpStatus> deleteAllComponents() {
+  @DeleteMapping("/components")
+  public ResponseEntity<HttpStatus> deleteAllcomponents() {
     try {
       ComponentRepository .deleteAll();
       return new ResponseEntity<>(HttpStatus.NO_CONTENT);
@@ -105,18 +108,43 @@ public class ComponentController {
     }
   }
 
-  @GetMapping("/Components/isCentralApp")
-  public ResponseEntity<List<Component>> findByisCentralApp() {
+  @GetMapping("/components/centralapp")
+  public ResponseEntity<List<Component>> findBycentralapp() {
     try {
-      List<Component> Components = ComponentRepository .findByisCentralApp(true);
+      List<Component> components = ComponentRepository .findByCentralapp(true);
 
-      if (Components.isEmpty()) {
+      if (components.isEmpty()) {
         return new ResponseEntity<>(HttpStatus.NO_CONTENT);
       }
-      return new ResponseEntity<>(Components, HttpStatus.OK);
+      return new ResponseEntity<>(components, HttpStatus.OK);
     } catch (Exception e) {
       return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
     }
   }
+  @GetMapping("/components/upstreamapp")
+  public ResponseEntity<List<Component>> findByupstreamapp() {
+    try {
+      List<Component> components = ComponentRepository .findByUpstreamapp(true);
 
+      if (components.isEmpty()) {
+        return new ResponseEntity<>(HttpStatus.NO_CONTENT);
+      }
+      return new ResponseEntity<>(components, HttpStatus.OK);
+    } catch (Exception e) {
+      return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
+    }
+  }
+  @GetMapping("/components/downstreamapp")
+  public ResponseEntity<List<Component>> findBydownstreamapp() {
+    try {
+      List<Component> components = ComponentRepository .findByDownstreamapp(true);
+
+      if (components.isEmpty()) {
+        return new ResponseEntity<>(HttpStatus.NO_CONTENT);
+      }
+      return new ResponseEntity<>(components, HttpStatus.OK);
+    } catch (Exception e) {
+      return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
+    }
+  }
 }
