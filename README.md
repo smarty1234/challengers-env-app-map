@@ -14,6 +14,7 @@ Once the application is up test this by the following GET,PUT,POST,DEL Methods
 - In Insomnia or Postman send a POST request `http://localhost:8080/api/deployments` using the following json body
 ![POST REQUEST](images/post_request.png)
 
+- Request
 ```{
 	  "envName": "DEV",
 	"components": [
@@ -133,4 +134,5 @@ Once the application is up test this by the following GET,PUT,POST,DEL Methods
      - This is the name of the app component	 
    - `buildversion`
      - This is the build version such as `master.45` - depends on cicd.yml or pom.xml 
-	 
+   - `releasedate`
+     - This is the deploy date of `master.45` - when the tool is executed after sucecssful deployment this date is updated.
